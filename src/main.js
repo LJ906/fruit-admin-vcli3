@@ -3,24 +3,16 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import Cookies from 'js-cookie'
-
-import 'normalize.css/normalize.css' // a modern alternative to CSS resets
-
+import 'normalize.css/normalize.css' // CSS resets
 import Element from 'element-ui'
 import './styles/element-variables.scss'
 
 import '@/styles/index.scss' // global css
-import * as filters from './filters' // global filters
+import './icons' // icon
 
-Vue.use(Element, {
-  size: Cookies.get('size') || 'medium' // set element-ui default size
-})
+// import _ from 'lodash'
 
-// register global utility filters
-Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
-})
+Vue.use(Element)
 
 Vue.config.productionTip = false
 
