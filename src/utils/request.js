@@ -32,7 +32,6 @@ service.interceptors.request.use(
   error => {
     // tryHideFullScreenLoading()
     this.$message({ message: '请求超时！', type: 'error' })
-    console.log(error)
     return Promise.reject(error)
   }
 )
@@ -41,14 +40,13 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const headers = response.headers
-    let conType = headers['content-type'].toLowerCase()
+    const conType = headers['content-type'].toLowerCase()
     if (conType.indexOf('application/octet-stream') >= 0 || conType.indexOf('application/vnd.ms-excel') >= 0 || conType.indexOf('text/plain') >= 0 || conType.indexOf('application/msword') >= 0) {
       return response
     }
 
     const data = response.data
 
-    console.log('interceptors-data', data)
     // 登录认证失败返回登录页面
     if (data.code === 401) {
       store.dispatch('user/resetToken').then(() => {
@@ -63,7 +61,6 @@ service.interceptors.response.use(
       return data
     }
   }, error => {
-    console.log('baocuo', error)
     return Promise.reject(error)
   }
 )
@@ -102,12 +99,12 @@ export function get(url, params = {}) {
 }
 
 export function formSubmit(url, params) {
-  let form = document.createElement('form')
+  const form = document.createElement('form')
   form.action = url
   form.method = 'post'
   form.style.display = 'none'
   _.keys(params, o => {
-    let inputElement = document.createElement('input')
+    const inputElement = document.createElement('input')
     inputElement.type = 'hidden'
     inputElement.setAttribute('name', o)
     inputElement.setAttribute('value', params[o])

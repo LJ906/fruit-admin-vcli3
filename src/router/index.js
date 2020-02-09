@@ -91,13 +91,13 @@ export const asyncRoutes = [
       {
         path: 'index',
         component: () => import('@/views/transition-demo/transition-button'),
-        name: 'drag-dialog',
+        name: 'transition-btn',
         meta: { title: '按钮动画' }
       },
       {
         path: 'back-to-top',
         component: () => import('@/views/transition-demo/back-to-top'),
-        name: 'ack-to-top',
+        name: 'back-to-top',
         meta: { title: '返回顶部' }
       }
     ]
