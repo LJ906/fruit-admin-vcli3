@@ -11,6 +11,9 @@ import Element from 'element-ui'
 import './styles/element-variables.scss'
 
 import '@/styles/index.scss' // global css
+
+import './icons' // icon
+
 import * as filters from './filters' // global filters
 
 Vue.use(Element, {
