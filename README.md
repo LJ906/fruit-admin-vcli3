@@ -1,4 +1,4 @@
-# fruit-admin-vcli3
+# hcl-group-cockpit
 
 ## Project setup
 ```

@@ -1,12 +1,11 @@
 'use strict'
 const path = require('path')
-const defaultSettings = require('./src/settings.js')
 
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'LJ' // page title
+const name = '集团项目驾驶舱' // page title
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
@@ -27,7 +26,7 @@ module.exports = {
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
-  lintOnSave: process.env.NODE_ENV === 'development',
+  lintOnSave: process.env.NODE_ENV === 'development', // 取消eslint校验设置false即可
   productionSourceMap: false,
   devServer: {
     port: port,
@@ -39,11 +38,12 @@ module.exports = {
     proxy: {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
-      [process.env.VUE_APP_BASE_API]: {
-        target: `http://127.0.0.1:${port}/mock`,
+      [process.env.VUE_APP_BASE_URL]: {
+        // target: `http://127.0.0.1:${port}/mock`,
+        target: `//10.102.17.44:8089/HCLCNNC`,
         changeOrigin: true,
         pathRewrite: {
-          ['^' + process.env.VUE_APP_BASE_API]: ''
+          ['^' + process.env.VUE_APP_BASE_URL]: ''
         }
       }
     }
