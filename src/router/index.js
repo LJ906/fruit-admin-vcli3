@@ -97,7 +97,7 @@ export const asyncRoutes = [
       {
         path: 'back-to-top',
         component: () => import('@/views/transition-demo/back-to-top'),
-        name: 'back-to-top',
+        name: 'ack-to-top',
         meta: { title: '返回顶部' }
       }
     ]
