@@ -53,12 +53,25 @@ export const asyncRoutes = [
     path: '/editor',
     redirect: '/editor/index',
     component: Layout,
+    meta: { title: '编辑器', icon: 'example' },
     children: [
       {
         path: 'index',
         component: () => import('@/views/editor/index'),
         name: 'Editor',
-        meta: { title: '富文本编辑器', icon: 'example', noCache: true }
+        meta: { title: '富文本编辑器', noCache: true }
+      },
+      {
+        path: 'editor-flow',
+        component: () => import('@/views/vue-editor-flow/index'),
+        name: 'EditorFlow',
+        meta: { title: '流程图', noCache: true }
+      },
+      {
+        path: 'dagre',
+        component: () => import('@/views/vue-editor-flow/dagre1'),
+        name: 'dagre',
+        meta: { title: '流程图1', noCache: true }
       }
     ]
   },
