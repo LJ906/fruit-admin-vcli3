@@ -8,12 +8,12 @@ import Element from 'element-ui'
 import './styles/element-variables.scss'
 
 import '@/styles/index.scss' // global css
-
+import '@/assets/css/init.css'
 import './icons' // icon
 
 // import * as filters from './filters' // global filters
 
-// import _ from 'lodash'
+import _ from 'lodash'
 
 Vue.use(Element)
 

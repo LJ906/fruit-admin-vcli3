@@ -65,13 +65,25 @@ export const asyncRoutes = [
         path: 'editor-flow',
         component: () => import('@/views/vue-editor-flow/index'),
         name: 'EditorFlow',
-        meta: { title: '流程图', noCache: true }
+        meta: { title: '流程图G6', noCache: true }
       },
       {
         path: 'dagre',
         component: () => import('@/views/vue-editor-flow/dagre1'),
         name: 'dagre',
-        meta: { title: '流程图1', noCache: true }
+        meta: { title: '流程图流程图G6-1', noCache: true }
+      },
+      {
+        path: 'flow',
+        component: () => import('@/views/easy-flow/index'),
+        name: 'flow',
+        meta: { title: '流程图jsPlumb', noCache: true }
+      },
+      {
+        path: 'easy-flow',
+        component: () => import('@/views/easy-flow/panel'),
+        name: 'easy-flow',
+        meta: { title: '简易流程图', noCache: true }
       }
     ]
   },
