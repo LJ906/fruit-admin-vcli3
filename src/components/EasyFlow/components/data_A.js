@@ -4,8 +4,9 @@ var dataA = {
     {
       id: '1-1',
       name: '核辐射安全分析报告',
-      type: 'task',
+      type: '申请',
       left: '20px',
+      backgroundColor: '#E65D6E',
       top: '70px',
       ico: 'el-icon-user-solid',
       show: true
@@ -13,7 +14,8 @@ var dataA = {
     {
       id: '1-2',
       name: '核辐射安全技术审查',
-      type: 'task',
+      backgroundColor: '#30B08F',
+      type: '申请',
       left: '20px',
       top: '150px',
       ico: 'el-icon-user-solid',
@@ -22,7 +24,7 @@ var dataA = {
     {
       id: '1-3',
       name: '乏燃料运输事故运输应急预案申请',
-      type: 'task',
+      type: '申请',
       left: '20px',
       top: '230px',
       ico: 'el-icon-present',
@@ -30,7 +32,7 @@ var dataA = {
     }, {
       id: '1-4',
       name: '乏燃料运输事故运输应急预案申请批复',
-      type: 'task',
+      type: '申请',
       left: '20px',
       top: '310px',
       ico: 'el-icon-present',
@@ -39,7 +41,7 @@ var dataA = {
     {
       id: '1-5',
       name: '乏燃料启运申请',
-      type: 'task',
+      type: '申请',
       left: '20px',
       top: '440px',
       ico: 'el-icon-present',
@@ -48,7 +50,7 @@ var dataA = {
     {
       id: '1-6',
       name: '乏燃料启运申请审批',
-      type: 'task',
+      type: '申请',
       left: '280px',
       top: '440px',
       ico: 'el-icon-present',
@@ -57,7 +59,7 @@ var dataA = {
     {
       id: '1-7',
       name: '启运地环保厅备案申请',
-      type: 'task',
+      type: '申请',
       left: '540px',
       top: '440px',
       ico: 'el-icon-present',
@@ -66,7 +68,7 @@ var dataA = {
     {
       id: '1-8',
       name: '启运地环保厅辐射处审批',
-      type: 'task',
+      type: '申请',
       left: '800px',
       top: '440px',
       ico: 'el-icon-present',
@@ -74,47 +76,47 @@ var dataA = {
     },
     {
       id: '2-2',
-      type: 'task',
+      type: '申请',
       name: '辐射安全分析报告申请批复',
       left: '280px',
       top: '150px',
-      ico: 'el-icon-goods',
+      ico: 'el-icon-time',
       show: true
     },
     {
       id: '2-3',
-      type: 'task',
+      type: '申请',
       name: '甘肃审环保厅辐射处审批',
       left: '280px',
       top: '310px',
-      ico: 'el-icon-goods',
+      ico: 'el-icon-time',
       show: true
     },
     {
       id: '3-1',
-      type: 'task',
+      type: '申请',
       name: '安全分析报告书(军工)申请',
       left: '540px',
       top: '70px',
-      ico: 'el-icon-goods',
+      ico: 'el-icon-time',
       show: true
     },
     {
       id: '3-2',
-      type: 'task',
+      type: '申请',
       name: '核安全技术审评',
       left: '540px',
       top: '150px',
-      ico: 'el-icon-goods',
+      ico: 'el-icon-time',
       show: true
     },
     {
       id: '3-3',
-      type: 'task',
+      type: '申请',
       name: '国防科工局应安司审批',
       left: '540px',
       top: '310px',
-      ico: 'el-icon-goods',
+      ico: 'el-icon-time',
       show: true
     }
   ],

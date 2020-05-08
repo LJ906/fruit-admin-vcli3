@@ -44,6 +44,7 @@ export default {
      * @param id
      */
     init(data, id) {
+      console.log('dianji', data, id)
       this.data = data
       data.nodeList.filter(node => {
         if (node.id === id) {

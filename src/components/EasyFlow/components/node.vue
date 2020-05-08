@@ -1,12 +1,12 @@
 <template>
   <div
     ref="node"
+    class="flow-node-container"
     :style="nodeContainerStyle"
     @mouseenter="mouseEnter=true"
     @mouseleave="mouseEnter=false"
     @click="clickNode"
     @mouseup="changeNodePosition"
-    class="flow-node-container"
   >
     <div class="flow-node-left"></div>
 
@@ -16,9 +16,9 @@
 
     <div class="flow-node-text" :show-overflow-tooltip="true">{{node.name}}</div>
 
-    <div class="flow-node-right-ico" v-if="mouseEnter" >
+    <div class="flow-node-right-ico" v-if="mouseEnter">
       <i class="el-icon-edit" style="margin-bottom: 4px" @click="editNode"></i>
-      <i class="el-icon-delete"  @click="deleteNode"></i>
+      <i class="el-icon-delete" @click="deleteNode"></i>
     </div>
   </div>
 </template>
@@ -32,7 +32,7 @@ export default {
     return {
       // 控制节点操作显示
       mouseEnter: false
-      // stateImg: require('../img/ok.png')
+      // isClickedId: false
     }
   },
   computed: {
@@ -41,6 +41,7 @@ export default {
       return {
         top: this.node.top,
         left: this.node.left
+        // backgroundColor: this.node.backgroundColor
       }
     },
     nodeIcoClass() {
@@ -58,7 +59,8 @@ export default {
     },
     // 点击节点
     clickNode() {
-      this.$emit('clickNode', this.node.id)
+      // this.isClickedId = this.node.id
+      this.$emit('clickNode', this.node)
     },
     // 鼠标移动后抬起
     changeNodePosition() {
@@ -132,7 +134,8 @@ export default {
   background-color: #fff;
 }
 
-.flow-node-container:hover {
+.flow-node-container:hover,
+.flow-node-container.clicked {
   /* 设置移动样式*/
   cursor: move;
   background-color: #f0f7ff;
@@ -160,7 +163,6 @@ export default {
 .flow-node-text {
   color: #565758;
   font-size: 12px;
-  /* line-height: 35px; */
   margin-left: 8px;
   width: 140px;
   /* 设置超出宽度文本显示方式*/

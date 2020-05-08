@@ -1,11 +1,27 @@
 <template>
   <div v-if="easyFlowVisible">
-    <el-button type="primary" size="small" icon="el-icon-plus" @click="addNode($event)">添加节点</el-button>
-    <el-button type="primary" size="small" @click="saveAll($event)">保存</el-button>
+    <el-row>
+      <el-col :span="24" align="right">
+        <el-dropdown @command="beforeAdd" style="margin-right: 10px">
+          <el-button type="primary" size="mini">
+            添加节点
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="apply">申请节点</el-dropdown-item>
+            <el-dropdown-item command="approve">审批节点</el-dropdown-item>
+            <el-dropdown-item command="check">批复节点</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+
+        <!-- <el-button type="primary" size="mini" icon="el-icon-plus" @click="addNode($event)">添加节点</el-button> -->
+        <el-button type="primary" size="mini" @click="saveAll($event)" icon="el-icon-check">保存</el-button>
+      </el-col>
+    </el-row>
     <el-row>
       <el-col :span="24">
         <!--画布-->
-        <div id="flowContainer" ref="flowContainer" class="container">
+        <div id="flowContainer" ref="flowContainer" class="container" @mousewheel="onMousewheel">
           <template v-for="node in data.nodeList">
             <flow-node
               :key="node.id"
@@ -24,15 +40,16 @@
     </el-row>
 
     <!-- 编辑弹框 -->
-    <el-dialog title="收货地址" :visible.sync="dialogEdit">
+    <el-dialog title=" " :visible.sync="dialogEdit">
       <flow-node-form ref="nodeForm" @saveSuccess="dialogEdit = false"></flow-node-form>
     </el-dialog>
   </div>
 </template>
 
 <script>
+// import draggable from 'vuedraggable'
 import { jsPlumb } from 'jsplumb'
-import { easyFlowMixin } from '@/mixins/easy_flow_mixin'
+import { easyFlowMixin } from './easy_flow_mixin'
 import flowNode from './components/node'
 import FlowNodeForm from './components/node_form'
 import lodash from 'lodash'
@@ -45,7 +62,7 @@ export default {
       jsPlumb: null,
       // 控制画布销毁
       easyFlowVisible: true,
-      // 控制流程数据显示与隐藏
+      // 控制流程数据form表单显示与隐藏
       flowInfoVisible: false,
       // 是否加载完毕标志位
       loadEasyFlowFinish: false,
@@ -70,6 +87,17 @@ export default {
     })
   },
   methods: {
+    dataReloadA() {
+      this.dataReload(getDataA())
+    },
+    // // 模拟载入数据dataB
+    // dataReloadB() {
+    //   this.dataReload(getDataB())
+    // },
+    // // 模拟载入数据dataC
+    // dataReloadC() {
+    //   this.dataReload(getDataC())
+    // },
     // 返回唯一标识
     getUUID() {
       return Math.random()
@@ -86,6 +114,7 @@ export default {
         this.loadEasyFlow()
         // 单点击了连接线,
         this.jsPlumb.bind('click', (conn, originalEvent) => {
+          console.log('单点击了连接线', conn)
           this.$confirm('确定删除所点击的线吗?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -117,7 +146,7 @@ export default {
 
         // 连线右击
         this.jsPlumb.bind('contextmenu', evt => {
-          console.log('contextmenu', evt)
+          console.log('连线右击contextmenu =', evt)
         })
 
         // 连线
@@ -182,7 +211,11 @@ export default {
     changeLine(oldFrom, oldTo) {
       this.deleteLine(oldFrom, oldTo)
     },
-    // 改变节点的位置
+    /**
+     * 改变节点的位置
+     * 1. 从nodeList中找到对应节点
+     * 2. 改变list对应节点的left top
+     */
     changeNodeSite(data) {
       for (var i = 0; i < this.data.nodeList.length; i++) {
         let node = this.data.nodeList[i]
@@ -192,6 +225,24 @@ export default {
         }
       }
     },
+    beforeAdd(command) {
+      let typeObj = {
+        apply: {
+          type: '申请节点',
+          ico: 'el-icon-user-solid'
+        },
+        approve: {
+          type: '审批节点',
+          ico: 'el-icon-time'
+        },
+        check: {
+          type: '批复节点',
+          ico: 'el-icon-s-promotion'
+        }
+      }
+
+      this.addNode({}, typeObj[command])
+    },
     /**
      * 拖拽结束后添加新的节点
      * @param evt
@@ -199,7 +250,7 @@ export default {
      * @param mousePosition 鼠标拖拽结束的坐标
      */
     addNode(evt, nodeMenu) {
-      let mousePosition = { left: -1, top: -1 }
+      let mousePosition = { left: -1, top: -1 } // 暂定添加的新节点的坐标
       let nodeId = this.getUUID()
       let left = mousePosition.left
       let top = mousePosition.top
@@ -207,10 +258,10 @@ export default {
       var node = {
         id: nodeId,
         name: '新建节点',
-        type: 'task',
+        type: nodeMenu.type,
         left: left + 'px',
         top: top + 'px',
-        ico: 'el-icon-goods',
+        ico: nodeMenu.ico,
         show: true
       }
       /**
@@ -254,7 +305,8 @@ export default {
         .catch(() => {})
       return true
     },
-    clickNode(nodeId) {
+    clickNode(node) {
+      console.log('点击节点', node)
       // this.$refs.nodeForm.init(this.data, nodeId)
     },
     editNode(nodeId) {
@@ -307,18 +359,7 @@ export default {
         })
       })
     },
-    // 模拟载入数据dataA
-    dataReloadA() {
-      this.dataReload(getDataA())
-    },
-    // // 模拟载入数据dataB
-    // dataReloadB() {
-    //   this.dataReload(getDataB())
-    // },
-    // // 模拟载入数据dataC
-    // dataReloadC() {
-    //   this.dataReload(getDataC())
-    // },
+
     changeLabel() {
       var lines = this.jsPlumb.getConnections({
         source: 'nodeA',
@@ -331,6 +372,9 @@ export default {
     },
     saveAll() {
       console.log('this.data', this.data)
+    },
+    onMousewheel(e) {
+      console.log('滚动了', e)
     }
   }
 }
@@ -340,7 +384,7 @@ export default {
 #flowContainer {
   /* background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0) 10%), linear-gradient(rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0) 10%); */
   /* background-size: 10px 10px; */
-  height: 100%;
+  height: 700px;
   background-color: rgb(251, 251, 251);
   position: relative;
 }

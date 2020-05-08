@@ -51,13 +51,13 @@ export default {
         {
           id: '1',
           type: 'group',
-          name: '开始节点',
+          name: '申请节点',
           ico: 'el-icon-video-play',
           children: [
             {
               id: '11',
               type: 'timer',
-              name: '数据接入',
+              name: '申请报告',
               ico: 'el-icon-time',
               // 自定义覆盖样式
               style: {}
@@ -65,7 +65,7 @@ export default {
             {
               id: '12',
               type: 'task',
-              name: '接口调用',
+              name: '其他',
               ico: 'el-icon-odometer',
               // 自定义覆盖样式
               style: {}
@@ -75,13 +75,13 @@ export default {
         {
           id: '2',
           type: 'group',
-          name: '结束节点',
+          name: '批复节点',
           ico: 'el-icon-video-pause',
           children: [
             {
               id: '21',
               type: 'end',
-              name: '流程结束',
+              name: '报告审批',
               ico: 'el-icon-caret-right',
               // 自定义覆盖样式
               style: {}
@@ -89,7 +89,7 @@ export default {
             {
               id: '22',
               type: 'over',
-              name: '数据清理',
+              name: '报告审查',
               ico: 'el-icon-shopping-cart-full',
               // 自定义覆盖样式
               style: {}

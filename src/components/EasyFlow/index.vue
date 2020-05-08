@@ -51,7 +51,7 @@
 <script>
 // import draggable from 'vuedraggable'
 import { jsPlumb } from 'jsplumb'
-import { easyFlowMixin } from '@/mixins/easy_flow_mixin'
+import { easyFlowMixin } from './easy_flow_mixin'
 import flowNode from './components/node'
 import nodeMenu from './components/node_menu'
 import FlowNodeForm from './components/node_form'
@@ -288,8 +288,9 @@ export default {
         .catch(() => {})
       return true
     },
-    clickNode(nodeId) {
-      console.log('点击')
+    clickNode(node) {
+      let nodeId = node.id
+      console.log('onde', node)
       this.$refs.nodeForm.init(this.data, nodeId)
     },
     // 是否具有该线
