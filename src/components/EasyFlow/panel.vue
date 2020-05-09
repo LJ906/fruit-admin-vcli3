@@ -16,12 +16,17 @@
 
         <!-- <el-button type="primary" size="mini" icon="el-icon-plus" @click="addNode($event)">添加节点</el-button> -->
         <el-button type="primary" size="mini" @click="saveAll($event)" icon="el-icon-check">保存</el-button>
+        <!-- <el-button type="primary" size="mini" v-print>打印页面</el-button> -->
+        <el-button
+          type="primary"
+          size="mini"
+          v-print="{ id: '#flowContainer', popTitle: '流程图' }"
+        >打印流程图</el-button>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="24">
-        <!--画布-->
-        <div id="flowContainer" ref="flowContainer" class="container" @mousewheel="onMousewheel">
+        <div id="flowContainer" ref="flowContainer" class="container">
           <template v-for="node in data.nodeList">
             <flow-node
               :key="node.id"
@@ -74,9 +79,7 @@ export default {
   // 一些基础配置移动该文件中
   mixins: [easyFlowMixin],
   components: {
-    // draggable,
     flowNode,
-    // nodeMenu,
     FlowNodeForm
   },
   mounted() {
@@ -90,14 +93,6 @@ export default {
     dataReloadA() {
       this.dataReload(getDataA())
     },
-    // // 模拟载入数据dataB
-    // dataReloadB() {
-    //   this.dataReload(getDataB())
-    // },
-    // // 模拟载入数据dataC
-    // dataReloadC() {
-    //   this.dataReload(getDataC())
-    // },
     // 返回唯一标识
     getUUID() {
       return Math.random()
@@ -112,10 +107,9 @@ export default {
         this.jsPlumb.setSuspendDrawing(false, true)
         // 初始化节点
         this.loadEasyFlow()
-        // 单点击了连接线,
-        this.jsPlumb.bind('click', (conn, originalEvent) => {
-          console.log('单点击了连接线', conn)
-          this.$confirm('确定删除所点击的线吗?', '提示', {
+        // 单点击了连接线, 单击click
+        this.jsPlumb.bind('dblclick', (conn, originalEvent) => {
+          this.$confirm('要删除所点击的线吗?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
@@ -125,31 +119,8 @@ export default {
             })
             .catch(() => {})
         })
-        // 连线
-        this.jsPlumb.bind('connection', evt => {
-          let from = evt.source.id
-          let to = evt.target.id
-          if (this.loadEasyFlowFinish) {
-            this.data.lineList.push({ from: from, to: to })
-          }
-        })
 
-        // 删除连线回调
-        this.jsPlumb.bind('connectionDetached', evt => {
-          this.deleteLine(evt.sourceId, evt.targetId)
-        })
-
-        // 改变线的连接节点
-        this.jsPlumb.bind('connectionMoved', evt => {
-          this.changeLine(evt.originalSourceId, evt.originalTargetId)
-        })
-
-        // 连线右击
-        this.jsPlumb.bind('contextmenu', evt => {
-          console.log('连线右击contextmenu =', evt)
-        })
-
-        // 连线
+        // 连线 成功前 beforeDrop 返回false 不能连线
         this.jsPlumb.bind('beforeDrop', evt => {
           let from = evt.sourceId
           let to = evt.targetId
@@ -168,14 +139,34 @@ export default {
           this.$message.success('连接成功')
           return true
         })
+        // 连线成功的回调
+        this.jsPlumb.bind('connection', evt => {
+          let from = evt.source.id
+          let to = evt.target.id
+          if (this.loadEasyFlowFinish) {
+            this.data.lineList.push({ from: from, to: to })
+          }
+        })
+        // 删除连线前
+        this.jsPlumb.bind('beforeDetach', evt => {})
+        // 删除连线成功后的回调
+        this.jsPlumb.bind('connectionDetached', evt => {
+          this.deleteLine(evt.sourceId, evt.targetId)
+        })
 
-        // beforeDetach
-        this.jsPlumb.bind('beforeDetach', evt => {
-          console.log('beforeDetach', evt)
+        // 改变线的连接节点
+        this.jsPlumb.bind('connectionMoved', evt => {
+          console.log('改变线的连接节点')
+          this.changeLine(evt.originalSourceId, evt.originalTargetId)
+        })
+
+        // 连线右击
+        this.jsPlumb.bind('contextmenu', evt => {
+          console.log('连线右击contextmenu =', evt)
         })
       })
     },
-    // 加载流程图
+    // 初始化流程图
     loadEasyFlow() {
       // 初始化节点
       for (var i = 0; i < this.data.nodeList.length; i++) {
@@ -307,6 +298,7 @@ export default {
     },
     clickNode(node) {
       console.log('点击节点', node)
+      // this.$emit('clickNode')
       // this.$refs.nodeForm.init(this.data, nodeId)
     },
     editNode(nodeId) {
@@ -372,9 +364,7 @@ export default {
     },
     saveAll() {
       console.log('this.data', this.data)
-    },
-    onMousewheel(e) {
-      console.log('滚动了', e)
+      this.$emit('saveData', this.data)
     }
   }
 }

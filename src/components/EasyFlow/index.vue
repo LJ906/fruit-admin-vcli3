@@ -1,18 +1,18 @@
 <template>
-  <div v-if="easyFlowVisible" >
-    <el-row>
-      <!--顶部工具菜单-->
-      <!-- <el-col :span="24">
-        <div class="flow-tooltar">
-          <el-link type="primary">{{data.name}}</el-link>
-          <el-button icon="el-icon-document" @click="dataInfo" size="mini">流程信息</el-button>
-          <el-button @click="dataReloadA" icon="el-icon-refresh" size="mini">切换流程A</el-button>
-          <el-button @click="dataReloadB" icon="el-icon-refresh" size="mini">切换流程B</el-button>
-          <el-button @click="dataReloadC" icon="el-icon-refresh" size="mini">切换流程C</el-button>
-          <el-button @click="changeLabel" icon="el-icon-edit-outline" size="mini">设置线</el-button>
-        </div>
-      </el-col> -->
-    </el-row>
+  <div v-if="easyFlowVisible">
+    <!--顶部工具菜单-->
+    <!-- <el-row>
+    <el-col :span="24">-->
+    <!-- <div class="flow-tooltar"> -->
+    <!-- <el-link type="primary">{{data.name}}</el-link> -->
+    <!-- <el-button icon="el-icon-document" @click="dataInfo" size="mini">流程信息</el-button> -->
+    <!-- <el-button @click="dataReloadA" icon="el-icon-refresh" size="mini">切换流程A</el-button> -->
+    <!-- <el-button @click="dataReloadB" icon="el-icon-refresh" size="mini">切换流程B</el-button> -->
+    <!-- <el-button @click="dataReloadC" icon="el-icon-refresh" size="mini">切换流程C</el-button> -->
+    <!-- <el-button @click="changeLabel" icon="el-icon-edit-outline" size="mini">设置线</el-button> -->
+    <!-- </div> -->
+    <!-- </el-col>
+    </el-row>-->
     <el-row>
       <!--左侧可以拖动的菜单-->
       <el-col :span="3" ref="nodeMenu">
@@ -44,7 +44,7 @@
       </el-col>
     </el-row>
     <!-- 流程数据详情 -->
-    <flow-info v-if="flowInfoVisible" ref="flowInfo" :data="data"></flow-info>
+    <!-- <flow-info v-if="flowInfoVisible" ref="flowInfo" :data="data"></flow-info> -->
   </div>
 </template>
 
@@ -290,7 +290,6 @@ export default {
     },
     clickNode(node) {
       let nodeId = node.id
-      console.log('onde', node)
       this.$refs.nodeForm.init(this.data, nodeId)
     },
     // 是否具有该线
@@ -351,11 +350,12 @@ export default {
     // },
     changeLabel() {
       var lines = this.jsPlumb.getConnections({
-        source: 'nodeA',
-        target: 'nodeB'
+        source: '1-1',
+        target: '1-2'
       })
+      console.log('lines', lines)
       lines[0].setLabel({
-        label: '',
+        label: 'label',
         cssClass: 'labelClass a b'
       })
     }

@@ -16,7 +16,7 @@
           <el-input v-model="node.top"></el-input>
         </el-form-item>
         <el-form-item label="ico图标">
-          <el-input v-model="node.ico"></el-input>
+          <el-input v-model="node.ico" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button @click="reset" icon="el-icon-close">重置</el-button>
@@ -44,11 +44,9 @@ export default {
      * @param id
      */
     init(data, id) {
-      console.log('dianji', data, id)
       this.data = data
       data.nodeList.filter(node => {
         if (node.id === id) {
-          console.log(node)
           this.node = cloneDeep(node)
         }
       })
