@@ -50,7 +50,7 @@ var dataA = {
     {
       id: '1-6',
       name: '乏燃料启运申请审批',
-      type: '审批',
+      type: '申请',
       left: '20px',
       top: '540px',
       ico: 'el-icon-present',
@@ -68,7 +68,7 @@ var dataA = {
     {
       id: '1-8',
       name: '启运地环保厅辐射处审批',
-      type: '审批',
+      type: '申请',
       left: '600px',
       top: '540px',
       ico: 'el-icon-present',

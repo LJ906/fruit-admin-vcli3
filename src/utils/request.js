@@ -2,11 +2,10 @@ import axios from 'axios'
 import router from '../router'
 import store from '@/store'
 import _ from 'lodash'
-// import { getToken } from '@/utils/auth'
 
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_URL,
-  withCredentials: true, // send cookies when cross-domain requests
+  baseURL: window.global_config.BASE_URL, // process.env.VUE_APP_BASE_URL,
+  withCredentials: true,
   timeout: 10000
 })
 

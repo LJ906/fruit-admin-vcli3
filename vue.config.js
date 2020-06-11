@@ -1,11 +1,11 @@
 'use strict'
 const path = require('path')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = '集团项目驾驶舱' // page title
+const name = '后台管理' // page title
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
@@ -14,6 +14,14 @@ const name = '集团项目驾驶舱' // page title
 // port = 9527 npm run dev OR npm run dev --port = 9527
 const port = process.env.port || process.env.npm_config_port || 9527 // dev port
 
+// 设置打包后也能配置后台接口路径
+// let GenerateAssetPlugin = require('generate-asset-webpack-plugin')
+// let createServerConfig = function(params) {
+//   let oApi = {
+//     baseURL: 'https://198.168.0.108:8080'
+//   }
+//   return JSON.stringify(oApi)
+// }
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
   /**
@@ -56,9 +64,18 @@ module.exports = {
       alias: {
         '@': resolve('src')
       }
-    }
+    },
+    plugins: [
+      // new GenerateAssetPlugin({
+      //   filename: 'serverconfig.json',
+      //   fn: (compilation, cb) => {
+      //     cb(null, createServerConfig(compilation))
+      //   },
+      //   extraFiles: []
+      // })
+    ]
   },
-  chainWebpack (config) {
+  chainWebpack(config) {
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
 
@@ -103,7 +120,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
+              // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()

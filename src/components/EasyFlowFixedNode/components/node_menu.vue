@@ -137,8 +137,6 @@ export default {
     },
     // 拖拽结束时触发
     end(evt, e) {
-      console.log('moupo', mousePosition)
-
       this.$emit('addNode', evt, this.nodeMenu, mousePosition)
     },
     // 是否是火狐浏览器

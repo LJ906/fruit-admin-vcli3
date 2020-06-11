@@ -50,6 +50,9 @@ export default {
       default: ''
     }
   },
+  mounted() {
+    console.log('route', this.item)
+  },
   data() {
     this.onlyOneChild = null
     return {}

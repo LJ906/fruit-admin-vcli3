@@ -6,9 +6,6 @@
 
 <script>
 import BaseChart from '@/components/Charts/BaseChart'
-var parentWin = window.parent
-var parentDoc = parentWin.document
-
 export default {
   name: 'ColumnChart',
   props: {
@@ -17,7 +14,7 @@ export default {
   components: {
     BaseChart
   },
-  data () {
+  data() {
     return {
       option: {
         tooltip: {

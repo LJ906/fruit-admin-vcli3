@@ -7,6 +7,7 @@ import 'normalize.css/normalize.css' // CSS resets
 import Element from 'element-ui'
 import './styles/element-variables.scss'
 
+import axios from 'axios'
 import '@/styles/index.scss' // global css
 import '@/assets/css/init.css'
 import './icons' // icon
@@ -19,6 +20,14 @@ import _ from 'lodash'
 
 Vue.use(Element)
 Vue.use(Print)
+
+Vue.prototype.$_ = _
+
+// Vue.prototype.getConfigJson = function() {
+//   axios.get('../config.json').then((result) => {
+//     Vue.prototype.BASE_URL = result.data.BASE_URL
+//   }).catch((error) => { console.log(error) })
+// }
 
 Vue.config.productionTip = false
 

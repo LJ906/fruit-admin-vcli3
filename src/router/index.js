@@ -62,28 +62,40 @@ export const asyncRoutes = [
         meta: { title: '富文本编辑器', noCache: true }
       },
       {
-        path: 'editor-flow',
+        path: 'g6-flow-demo1',
         component: () => import('@/views/vue-editor-flow/index'),
-        name: 'EditorFlow',
-        meta: { title: '流程图G6', noCache: true }
+        name: 'g6-flow-demo1',
+        meta: { title: '流程图G6-1', noCache: true }
       },
       {
-        path: 'dagre',
+        path: 'g6-flow-demo2',
         component: () => import('@/views/vue-editor-flow/dagre1'),
-        name: 'dagre',
-        meta: { title: '流程图流程图G6-1', noCache: true }
+        name: 'g6-flow-demo2',
+        meta: { title: '流程图G6-2', noCache: true }
       },
       {
-        path: 'flow',
+        path: 'jsplumb-demo1',
         component: () => import('@/views/easy-flow/index'),
-        name: 'flow',
-        meta: { title: '流程图jsPlumb', noCache: true }
+        name: '流程图jsPlumb-1',
+        meta: { title: '流程图jsPlumb-1', noCache: true }
       },
       {
-        path: 'easy-flow',
+        path: 'jsplumb-demo2',
         component: () => import('@/views/easy-flow/panel'),
-        name: 'easy-flow',
-        meta: { title: '简易流程图', noCache: true }
+        name: '流程图jsPlumb-2',
+        meta: { title: '流程图-自定义节点', noCache: true }
+      },
+      {
+        path: 'jsplumb-demo3',
+        component: () => import('@/views/easy-flow/demo3'),
+        name: '流程图jsPlumb-3',
+        meta: { title: '树结构选节点', noCache: true }
+      },
+      {
+        path: 'jsplumb-beta',
+        component: () => import('@/views/easy-flow/demo4'),
+        name: '原型版-beta',
+        meta: { title: '两侧节点拖动流程图', noCache: true }
       }
     ]
   },
@@ -115,12 +127,14 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
+        hidden: true,
         component: () => import('@/views/transition-demo/transition-button'),
         name: 'transition-btn',
         meta: { title: '按钮动画' }
       },
       {
         path: 'back-to-top',
+        hidden: true,
         component: () => import('@/views/transition-demo/back-to-top'),
         name: 'ack-to-top',
         meta: { title: '返回顶部' }
@@ -131,7 +145,6 @@ export const asyncRoutes = [
     path: '/print',
     // redirect: 'transition/index',
     component: Layout,
-    alwaysShow: true,
     meta: { title: '打印', icon: 'print' },
     children: [
       {
@@ -139,6 +152,19 @@ export const asyncRoutes = [
         component: () => import('@/views/print'),
         name: 'print',
         meta: { title: '打印pdf' }
+      }
+    ]
+  },
+  {
+    path: '/table',
+    component: Layout,
+    meta: { title: '表格', icon: 'table' },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/table/dynamicColumn'),
+        name: 'dynamicColumn',
+        meta: { title: '动态列表格' }
       }
     ]
   },

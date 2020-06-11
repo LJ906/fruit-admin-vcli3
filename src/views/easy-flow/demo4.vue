@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import EasyFlow from '@/components/EasyFlow'
+import EasyFlow from '@/components/EasyFlowFixedNode/index'
 export default {
   components: {
     EasyFlow

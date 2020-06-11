@@ -1,36 +1,53 @@
 <template>
   <div v-if="easyFlowVisible">
     <el-row>
-      <el-col :span="3" ref="nodeMenu">
-        <node-menu @addNode="addNode"></node-menu>
-      </el-col>
-      <el-col :span="21">
-        <el-row>
-          <!--画布-->
-          <el-col :span="18">
-            <div id="flowContainer" ref="flowContainer" class="container">
-              <template v-for="node in data.nodeList">
-                <flow-node
-                  :key="node.id"
-                  v-show="node.show"
-                  :id="node.id"
-                  :node="node"
-                  @deleteNode="deleteNode"
-                  @changeNodeSite="changeNodeSite"
-                  @nodeRightMenu="nodeRightMenu"
-                  @clickNode="clickNode"
-                ></flow-node>
-              </template>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <flow-node-form ref="nodeForm"></flow-node-form>
-          </el-col>
-        </el-row>
+      <el-col :span="24" align="right">
+        <el-dropdown @command="beforeAdd" style="margin-right: 10px">
+          <el-button type="primary" size="mini">
+            添加节点
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="apply">申请节点</el-dropdown-item>
+            <el-dropdown-item command="approve">审批节点</el-dropdown-item>
+            <el-dropdown-item command="check">批复节点</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+
+        <!-- <el-button type="primary" size="mini" icon="el-icon-plus" @click="addNode($event)">添加节点</el-button> -->
+        <el-button type="primary" size="mini" @click="saveAll($event)" icon="el-icon-check">保存</el-button>
+        <!-- <el-button type="primary" size="mini" v-print>打印页面</el-button> -->
+        <el-button
+          type="primary"
+          size="mini"
+          v-print="{ id: '#flowContainer', popTitle: '流程图' }"
+        >打印流程图</el-button>
       </el-col>
     </el-row>
-    <!-- 流程数据详情 -->
-    <!-- <flow-info v-if="flowInfoVisible" ref="flowInfo" :data="data"></flow-info> -->
+    <el-row>
+      <el-col :span="24">
+        <div id="flowContainer" ref="flowContainer" class="container">
+          <template v-for="node in data.nodeList">
+            <flow-node
+              :key="node.id"
+              v-show="node.show"
+              :id="node.id"
+              :node="node"
+              @deleteNode="deleteNode"
+              @changeNodeSite="changeNodeSite"
+              @nodeRightMenu="nodeRightMenu"
+              @clickNode="clickNode"
+              @editNode="editNode"
+            ></flow-node>
+          </template>
+        </div>
+      </el-col>
+    </el-row>
+
+    <!-- 编辑弹框 -->
+    <el-dialog title=" " :visible.sync="dialogEdit">
+      <flow-node-form ref="nodeForm" @saveSuccess="dialogEdit = false"></flow-node-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -39,7 +56,6 @@
 import { jsPlumb } from 'jsplumb'
 import { easyFlowMixin } from './easy_flow_mixin'
 import flowNode from './components/node'
-import nodeMenu from './components/node_menu'
 import FlowNodeForm from './components/node_form'
 import lodash from 'lodash'
 import { getDataA } from './components/data_A'
@@ -51,20 +67,19 @@ export default {
       jsPlumb: null,
       // 控制画布销毁
       easyFlowVisible: true,
-      // 控制流程数据显示与隐藏
+      // 控制流程数据form表单显示与隐藏
       flowInfoVisible: false,
       // 是否加载完毕标志位
       loadEasyFlowFinish: false,
       // 数据
-      data: {}
+      data: {},
+      dialogEdit: false
     }
   },
   // 一些基础配置移动该文件中
   mixins: [easyFlowMixin],
   components: {
-    // draggable,
     flowNode,
-    nodeMenu,
     FlowNodeForm
   },
   mounted() {
@@ -75,6 +90,9 @@ export default {
     })
   },
   methods: {
+    dataReloadA() {
+      this.dataReload(getDataA())
+    },
     // 返回唯一标识
     getUUID() {
       return Math.random()
@@ -89,9 +107,9 @@ export default {
         this.jsPlumb.setSuspendDrawing(false, true)
         // 初始化节点
         this.loadEasyFlow()
-        // 单点击了连接线,
-        this.jsPlumb.bind('click', (conn, originalEvent) => {
-          this.$confirm('确定删除所点击的线吗?', '提示', {
+        // 单点击了连接线, 单击click
+        this.jsPlumb.bind('dblclick', (conn, originalEvent) => {
+          this.$confirm('要删除所点击的线吗?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
@@ -101,31 +119,8 @@ export default {
             })
             .catch(() => {})
         })
-        // 连线
-        this.jsPlumb.bind('connection', evt => {
-          let from = evt.source.id
-          let to = evt.target.id
-          if (this.loadEasyFlowFinish) {
-            this.data.lineList.push({ from: from, to: to })
-          }
-        })
 
-        // 删除连线回调
-        this.jsPlumb.bind('connectionDetached', evt => {
-          this.deleteLine(evt.sourceId, evt.targetId)
-        })
-
-        // 改变线的连接节点
-        this.jsPlumb.bind('connectionMoved', evt => {
-          this.changeLine(evt.originalSourceId, evt.originalTargetId)
-        })
-
-        // 连线右击
-        this.jsPlumb.bind('contextmenu', evt => {
-          console.log('contextmenu', evt)
-        })
-
-        // 连线
+        // 连线 成功前 beforeDrop 返回false 不能连线
         this.jsPlumb.bind('beforeDrop', evt => {
           let from = evt.sourceId
           let to = evt.targetId
@@ -144,14 +139,34 @@ export default {
           this.$message.success('连接成功')
           return true
         })
+        // 连线成功的回调
+        this.jsPlumb.bind('connection', evt => {
+          let from = evt.source.id
+          let to = evt.target.id
+          if (this.loadEasyFlowFinish) {
+            this.data.lineList.push({ from: from, to: to })
+          }
+        })
+        // 删除连线前
+        this.jsPlumb.bind('beforeDetach', evt => {})
+        // 删除连线成功后的回调
+        this.jsPlumb.bind('connectionDetached', evt => {
+          this.deleteLine(evt.sourceId, evt.targetId)
+        })
 
-        // beforeDetach
-        this.jsPlumb.bind('beforeDetach', evt => {
-          console.log('beforeDetach', evt)
+        // 改变线的连接节点
+        this.jsPlumb.bind('connectionMoved', evt => {
+          console.log('改变线的连接节点')
+          this.changeLine(evt.originalSourceId, evt.originalTargetId)
+        })
+
+        // 连线右击
+        this.jsPlumb.bind('contextmenu', evt => {
+          console.log('连线右击contextmenu =', evt)
         })
       })
     },
-    // 加载流程图
+    // 初始化流程图
     loadEasyFlow() {
       // 初始化节点
       for (var i = 0; i < this.data.nodeList.length; i++) {
@@ -187,7 +202,11 @@ export default {
     changeLine(oldFrom, oldTo) {
       this.deleteLine(oldFrom, oldTo)
     },
-    // 改变节点的位置
+    /**
+     * 改变节点的位置
+     * 1. 从nodeList中找到对应节点
+     * 2. 改变list对应节点的left top
+     */
     changeNodeSite(data) {
       for (var i = 0; i < this.data.nodeList.length; i++) {
         let node = this.data.nodeList[i]
@@ -197,36 +216,39 @@ export default {
         }
       }
     },
+    beforeAdd(command) {
+      let typeObj = {
+        apply: {
+          type: '申请节点',
+          ico: 'el-icon-user-solid'
+        },
+        approve: {
+          type: '审批节点',
+          ico: 'el-icon-time'
+        },
+        check: {
+          type: '批复节点',
+          ico: 'el-icon-s-promotion'
+        }
+      }
+
+      this.addNode({}, typeObj[command])
+    },
     /**
      * 拖拽结束后添加新的节点
      * @param evt
      * @param nodeMenu 被添加的节点对象
      * @param mousePosition 鼠标拖拽结束的坐标
      */
-    addNode(evt, nodeMenu, mousePosition) {
-      let width = this.$refs.nodeMenu.$el.clientWidth
+    addNode(evt, nodeMenu) {
+      let mousePosition = { left: -1, top: -1 } // 暂定添加的新节点的坐标
       let nodeId = this.getUUID()
       let left = mousePosition.left
       let top = mousePosition.top
-      if (left < 0) {
-        left = evt.originalEvent.layerX - width
-      }
-      if (top < 0) {
-        top = evt.originalEvent.clientY - 50
-      }
-      // 获取容器的坐标范围
-      // var containerRect = this.$refs.flowContainer.getBoundingClientRect()
-      // var containerX1 = containerRect.x, containerX2 = containerRect.x + containerRect.width
-      // var containerY1 = containerRect.y, containerY2 = containerRect.y + containerRect.height
-      // console.log(left, top)
-      // console.log(containerX1, containerY1, containerX2, containerY2)
-      // if (left <= containerX1 || left >= containerX2 || top <= containerY1 || top >= containerY2) {
-      //     this.$message.error('请拖入到容器中')
-      //     return false
-      // }
+
       var node = {
         id: nodeId,
-        name: nodeId,
+        name: '新建节点',
         type: nodeMenu.type,
         left: left + 'px',
         top: top + 'px',
@@ -275,8 +297,15 @@ export default {
       return true
     },
     clickNode(node) {
-      let nodeId = node.id
-      this.$refs.nodeForm.init(this.data, nodeId)
+      console.log('点击节点', node)
+      // this.$emit('clickNode')
+      // this.$refs.nodeForm.init(this.data, nodeId)
+    },
+    editNode(nodeId) {
+      this.dialogEdit = true
+      this.$nextTick(_ => {
+        this.$refs.nodeForm && this.$refs.nodeForm.init(this.data, nodeId)
+      })
     },
     // 是否具有该线
     hasLine(from, to) {
@@ -322,28 +351,20 @@ export default {
         })
       })
     },
-    // 模拟载入数据dataA
-    dataReloadA() {
-      this.dataReload(getDataA())
-    },
-    // // 模拟载入数据dataB
-    // dataReloadB() {
-    //   this.dataReload(getDataB())
-    // },
-    // // 模拟载入数据dataC
-    // dataReloadC() {
-    //   this.dataReload(getDataC())
-    // },
+
     changeLabel() {
       var lines = this.jsPlumb.getConnections({
-        source: '1-1',
-        target: '1-2'
+        source: 'nodeA',
+        target: 'nodeB'
       })
-      console.log('lines', lines)
       lines[0].setLabel({
-        label: 'label',
+        label: '',
         cssClass: 'labelClass a b'
       })
+    },
+    saveAll() {
+      console.log('this.data', this.data)
+      this.$emit('saveData', this.data)
     }
   }
 }
@@ -351,11 +372,10 @@ export default {
 
 <style>
 #flowContainer {
-  /*background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0) 10%), linear-gradient(rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0) 10%);*/
-  background-size: 10px 10px;
-  height: 500px;
+  /* background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0) 10%), linear-gradient(rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0) 10%); */
+  /* background-size: 10px 10px; */
+  height: 700px;
   background-color: rgb(251, 251, 251);
-  /*background-color: #fff;*/
   position: relative;
 }
 

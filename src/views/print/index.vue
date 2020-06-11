@@ -15,6 +15,14 @@ export default {
         printTitle: '小妹妹图片'
       }
     }
+  },
+  mounted() {
+    window.addEventListener('message', this.receiveMsg)
+  },
+  methods: {
+    receiveMsg(e) {
+      console.log('print-e.data', e.data)
+    }
   }
 }
 </script>

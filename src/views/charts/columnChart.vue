@@ -6,7 +6,6 @@
 
 <script>
 import BaseChart from '@/components/Charts/BaseChart'
-let parent = window.parent
 
 export default {
   name: 'ColumnChart',
@@ -248,17 +247,17 @@ export default {
     }
   },
   methods: {
-    handleClick(params) {
-      console.log('pareams', params)
-      let info = JSON.stringify({ data: params.data })
-      parent.postMessage(
-        {
-          method: 'fatherFun',
-          data: info
-        },
-        '*'
-      )
-    }
+    // handleClick(params) {
+    //   console.log('pareams', params)
+    //   let info = JSON.stringify({ data: params.data })
+    //   parent.postMessage(
+    //     {
+    //       method: 'fatherFun',
+    //       data: info
+    //     },
+    //     '*'
+    //   )
+    // }
   }
 }
 </script>

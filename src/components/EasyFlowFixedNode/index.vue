@@ -1,45 +1,61 @@
 <template>
   <div v-if="easyFlowVisible">
-    <el-row>
-      <el-col :span="3" ref="nodeMenu">
-        <node-menu @addNode="addNode"></node-menu>
-      </el-col>
-      <el-col :span="21">
-        <el-row>
-          <!--画布-->
-          <el-col :span="18">
-            <div id="flowContainer" ref="flowContainer" class="container">
-              <template v-for="node in data.nodeList">
-                <flow-node
-                  :key="node.id"
-                  v-show="node.show"
-                  :id="node.id"
-                  :node="node"
-                  @deleteNode="deleteNode"
-                  @changeNodeSite="changeNodeSite"
-                  @nodeRightMenu="nodeRightMenu"
-                  @clickNode="clickNode"
-                ></flow-node>
-              </template>
-            </div>
+    <el-row type="flex" class="w100">
+      <div style="width:250px" ref="nodeMenu">
+        <node-menu-tree @addNode="addNode" treeType="approve"></node-menu-tree>
+      </div>
+      <!-- <el-col :span="16"> -->
+      <div style="flex: 1">
+        <el-row style="height: 44px;line-height: 44px">
+          <el-col :span="12">
+            <span class="font16-ccc">定制流程图</span>
           </el-col>
-          <el-col :span="6">
-            <flow-node-form ref="nodeForm"></flow-node-form>
+          <el-col :span="12" align="right" class="padding-r30">
+            <el-button type="primary" size="mini" @click="saveAll($event)" icon="el-icon-check">保存</el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              v-print="{ id: '#flowContainer', popTitle: '流程图' }"
+            >打印流程图</el-button>
           </el-col>
         </el-row>
-      </el-col>
+        <!--画布-->
+        <div id="flowContainer" ref="flowContainer" class="container">
+          <template v-for="node in data.nodeList">
+            <flow-node
+              :key="node.id"
+              v-show="node.show"
+              :id="node.id"
+              :node="node"
+              @deleteNode="deleteNode"
+              @changeNodeSite="changeNodeSite"
+              @nodeRightMenu="nodeRightMenu"
+              @clickNode="clickNode"
+              @editNode="editNode"
+            ></flow-node>
+          </template>
+        </div>
+      </div>
+      <!-- </el-col> -->
+      <!-- <el-col :span="4"> -->
+      <div style="width:250px" ref="nodeMenu">
+        <node-menu-tree @addNode="addNode" treeType="apply"></node-menu-tree>
+      </div>
+      <!-- </el-col> -->
     </el-row>
-    <!-- 流程数据详情 -->
-    <!-- <flow-info v-if="flowInfoVisible" ref="flowInfo" :data="data"></flow-info> -->
+
+    <!-- 编辑弹框 -->
+    <el-dialog title=" " :visible.sync="dialogEdit" width="580px">
+      <flow-node-form ref="nodeForm" @saveSuccess="dialogEdit = false"></flow-node-form>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-// import draggable from 'vuedraggable'
 import { jsPlumb } from 'jsplumb'
 import { easyFlowMixin } from './easy_flow_mixin'
 import flowNode from './components/node'
-import nodeMenu from './components/node_menu'
+import nodeMenuTree from './components/node_menu_tree'
 import FlowNodeForm from './components/node_form'
 import lodash from 'lodash'
 import { getDataA } from './components/data_A'
@@ -56,7 +72,8 @@ export default {
       // 是否加载完毕标志位
       loadEasyFlowFinish: false,
       // 数据
-      data: {}
+      data: {},
+      dialogEdit: false
     }
   },
   // 一些基础配置移动该文件中
@@ -64,7 +81,7 @@ export default {
   components: {
     // draggable,
     flowNode,
-    nodeMenu,
+    nodeMenuTree,
     FlowNodeForm
   },
   mounted() {
@@ -203,30 +220,39 @@ export default {
      * @param nodeMenu 被添加的节点对象
      * @param mousePosition 鼠标拖拽结束的坐标
      */
-    addNode(evt, nodeMenu, mousePosition) {
-      let width = this.$refs.nodeMenu.$el.clientWidth
+    addNode(evt, nodeMenu, mousePosition, treeType) {
+      // 获取容器的坐标范围
+      var containerRect = this.$refs.flowContainer.getBoundingClientRect()
+      var containerY1 = containerRect.y
+      let xMax = containerRect.width - 200
+      let yMax = containerRect.height - 41
+
       let nodeId = this.getUUID()
       let left = mousePosition.left
       let top = mousePosition.top
+
       if (left < 0) {
-        left = evt.originalEvent.layerX - width
+        left = evt.originalEvent.layerX - 54
       }
       if (top < 0) {
-        top = evt.originalEvent.clientY - 50
+        top = evt.originalEvent.clientY - containerY1 - 10
       }
-      // 获取容器的坐标范围
-      // var containerRect = this.$refs.flowContainer.getBoundingClientRect()
-      // var containerX1 = containerRect.x, containerX2 = containerRect.x + containerRect.width
-      // var containerY1 = containerRect.y, containerY2 = containerRect.y + containerRect.height
-      // console.log(left, top)
-      // console.log(containerX1, containerY1, containerX2, containerY2)
-      // if (left <= containerX1 || left >= containerX2 || top <= containerY1 || top >= containerY2) {
-      //     this.$message.error('请拖入到容器中')
-      //     return false
-      // }
+
+      // 控制拖动范围
+      if (left < 0) {
+        left = 0
+      } else if (left > xMax) {
+        left = xMax
+      }
+      if (top < 0) {
+        top = 0
+      } else if (top > yMax) {
+        top = yMax
+      }
+
       var node = {
         id: nodeId,
-        name: nodeId,
+        name: nodeMenu.name,
         type: nodeMenu.type,
         left: left + 'px',
         top: top + 'px',
@@ -275,8 +301,13 @@ export default {
       return true
     },
     clickNode(node) {
-      let nodeId = node.id
-      this.$refs.nodeForm.init(this.data, nodeId)
+      console.log('点击节点', node)
+    },
+    editNode(nodeId) {
+      this.dialogEdit = true
+      this.$nextTick(_ => {
+        this.$refs.nodeForm && this.$refs.nodeForm.init(this.data, nodeId)
+      })
     },
     // 是否具有该线
     hasLine(from, to) {
@@ -322,28 +353,10 @@ export default {
         })
       })
     },
-    // 模拟载入数据dataA
-    dataReloadA() {
-      this.dataReload(getDataA())
-    },
-    // // 模拟载入数据dataB
-    // dataReloadB() {
-    //   this.dataReload(getDataB())
-    // },
-    // // 模拟载入数据dataC
-    // dataReloadC() {
-    //   this.dataReload(getDataC())
-    // },
-    changeLabel() {
-      var lines = this.jsPlumb.getConnections({
-        source: '1-1',
-        target: '1-2'
-      })
-      console.log('lines', lines)
-      lines[0].setLabel({
-        label: 'label',
-        cssClass: 'labelClass a b'
-      })
+    saveAll() {
+      console.log('savestat', this.data)
+
+      this.$emit('saveData', this.data)
     }
   }
 }
@@ -351,12 +364,11 @@ export default {
 
 <style>
 #flowContainer {
-  /*background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0) 10%), linear-gradient(rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0) 10%);*/
   background-size: 10px 10px;
-  height: 500px;
+  height: 1000px;
   background-color: rgb(251, 251, 251);
-  /*background-color: #fff;*/
   position: relative;
+  border: 1px solid #eee;
 }
 
 .labelClass {
@@ -364,7 +376,6 @@ export default {
   padding: 5px;
   opacity: 0.7;
   border: 1px solid #346789;
-  /*border-radius: 10px;*/
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
