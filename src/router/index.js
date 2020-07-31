@@ -168,6 +168,50 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/zip',
+    component: Layout,
+    redirect: '/zip/download',
+    alwaysShow: true,
+    name: 'Zip',
+    meta: { title: 'Zip', icon: 'zip' },
+    children: [
+      {
+        path: 'download',
+        component: () => import('@/views/zip/index'),
+        name: 'ExportZip',
+        meta: { title: 'Export Zip' }
+      },
+      {
+        path: 'excel',
+        component: () => import('@/views/excel/export-excel'),
+        name: 'ExportExcel',
+        meta: { title: 'ExportExcel' }
+      }
+    ]
+  },
+  {
+    path: '/scale',
+    component: Layout,
+    alwaysShow: true,
+    name: 'Zip',
+    meta: { title: '图片缩放', icon: 'drag' },
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/suofang/index'),
+        name: 'scale',
+        meta: { title: '图片缩放' }
+      },
+      {
+        path: '/bim',
+        component: () => import('@/views/bim/index'),
+        name: 'bim',
+        meta: { title: 'bim预览' }
+      }
+    ]
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

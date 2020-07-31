@@ -7,3 +7,10 @@ export function mockdata(params) {
     params
   })
 }
+export function articlelist(params) {
+  return request({
+    url: '/articlelist',
+    method: 'get',
+    params
+  })
+}
