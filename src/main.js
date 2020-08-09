@@ -18,6 +18,9 @@ import Print from 'vue-print-nb' // 窗口打印pdf
 
 import _ from 'lodash'
 
+// swiper
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
 // bim3d模型预览 cad预览
 import wlBimViewer from 'wl-bim-viewer'
 import 'wl-bim-viewer/lib/wl-bim-viewer.css'
@@ -25,6 +28,7 @@ Vue.use(wlBimViewer)
 
 Vue.use(Element)
 Vue.use(Print)
+Vue.use(VueAwesomeSwiper)
 
 Vue.prototype.$_ = _
 Vue.config.productionTip = false

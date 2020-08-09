@@ -53,7 +53,7 @@ export const asyncRoutes = [
     path: '/editor',
     redirect: '/editor/index',
     component: Layout,
-    meta: { title: '编辑器', icon: 'example' },
+    meta: { title: '编辑器', icon: 'edit' },
     children: [
       {
         path: 'index',
@@ -208,6 +208,38 @@ export const asyncRoutes = [
         component: () => import('@/views/bim/index'),
         name: 'bim',
         meta: { title: 'bim预览' }
+      },
+      {
+        path: '/l7',
+        component: () => import('@/views/bim/l7'),
+        name: 'l7',
+        meta: { title: 'l7' }
+      }
+    ]
+  },
+  {
+    path: '/scroll',
+    component: Layout,
+    meta: { title: 'scroll', icon: 'example' },
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/scroll'),
+        name: 'scroll',
+        meta: { title: 'better-scroll' }
+      }
+    ]
+  },
+  {
+    path: '/custom-components',
+    component: Layout,
+    meta: { title: '自定义组件', icon: 'component' },
+    children: [
+      {
+        path: 'loading',
+        component: () => import('@/views/customComponents/loading'),
+        name: 'loading',
+        meta: { title: '自定义loading' }
       }
     ]
   },

@@ -36,6 +36,7 @@ module.exports = {
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development', // 取消eslint校验设置false即可
   productionSourceMap: false,
+  runtimeCompiler: true,
   devServer: {
     port: port,
     open: true,
