@@ -1,0 +1,29 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
+  background: #1d1d1d;
+  color: #fff;
+  font-size: 48px;
+}
+
+// .sreen-container {}
+
+.content {
+  display: flex;
+}
+
+.screen-left {
+  display: flex;
+  flex-direction: column;
+  width: 860px;
+  height: 100%;
+  margin: 0 10px;
+
+  .left-top1 {
+    height: 206px;
+    margin-bottom: 20px;
+    border: 2px solid red;
+  }
+}

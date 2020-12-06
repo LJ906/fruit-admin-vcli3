@@ -1,5 +1,6 @@
 'use strict'
 const path = require('path')
+const webpack = require('webpack')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -14,20 +15,12 @@ const name = '后台管理' // page title
 // port = 9527 npm run dev OR npm run dev --port = 9527
 const port = process.env.port || process.env.npm_config_port || 9527 // dev port
 
-// 设置打包后也能配置后台接口路径
-// let GenerateAssetPlugin = require('generate-asset-webpack-plugin')
-// let createServerConfig = function(params) {
-//   let oApi = {
-//     baseURL: 'https://198.168.0.108:8080'
-//   }
-//   return JSON.stringify(oApi)
-// }
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
   /**
    * You will need to set publicPath if you plan to deploy your site under a sub path,
    * for example GitHub Pages. If you plan to deploy your site to https://foo.github.io/bar/,
-   * then publicPath should be set to "/bar/".
+   * then publicPath should be set to '/bar/'.
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
@@ -45,10 +38,7 @@ module.exports = {
       errors: true
     },
     proxy: {
-      // change xxx-api/login => mock/login
-      // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_URL]: {
-        // target: `http://127.0.0.1:${port}/mock`,
         target: `//10.102.17.44:8089/HCLCNNC`,
         changeOrigin: true,
         pathRewrite: {
@@ -67,6 +57,16 @@ module.exports = {
       }
     },
     plugins: [
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'windows.jQuery': 'jquery'
+      })
+      // new webpack.ProvidePlugin({
+      //   L: 'leaflet',
+      //   'window.L': 'leaflet',
+      //   'windows.L': 'leaflet'
+      // })
       // new GenerateAssetPlugin({
       //   filename: 'serverconfig.json',
       //   fn: (compilation, cb) => {
@@ -111,7 +111,7 @@ module.exports = {
     config
       // https://webpack.js.org/configuration/devtool/#development
       .when(process.env.NODE_ENV === 'development',
-        config => config.devtool('cheap-source-map')
+        config => config.devtool('cheap-source-map') // eval 最快但是无法调试，cheap-source-map可看到源码利于调试但是速度稍慢
       )
 
     config

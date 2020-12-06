@@ -4,6 +4,7 @@
 
 <script>
 import echarts from 'echarts'
+import 'echarts/map/js/china.js'
 import resize from './mixins/resize'
 
 export default {
@@ -15,18 +16,18 @@ export default {
     },
     width: {
       type: String,
-      default: '200px'
+      default: '100%'
     },
     height: {
       type: String,
-      default: '200px'
+      default: '100%'
     },
     option: {
       type: Object,
       required: true
     }
   },
-  data () {
+  data() {
     return {
       chart: null
     }
@@ -50,13 +51,14 @@ export default {
     this.chart = null
   },
   methods: {
-    renderChart () {
+    renderChart() {
       // 基于准备好的dom，初始化echarts实例
       this.chart = echarts.init(this.$refs[this.id])
       this.chart.setOption(this.option)
 
       // 事件
       this.chart.on('click', params => {
+        console.log('click', params)
         this.$emit('click', params)
       })
       // 切换图例

@@ -198,23 +198,29 @@ export const asyncRoutes = [
     meta: { title: '图片缩放', icon: 'drag' },
     children: [
       {
-        path: '',
-        component: () => import('@/views/suofang/index'),
-        name: 'scale',
-        meta: { title: '图片缩放' }
-      },
-      {
         path: '/bim',
         component: () => import('@/views/bim/index'),
         name: 'bim',
         meta: { title: 'bim预览' }
-      },
-      {
-        path: '/l7',
-        component: () => import('@/views/bim/l7'),
-        name: 'l7',
-        meta: { title: 'l7' }
       }
+      // {
+      //   path: '/leaflet-static',
+      //   component: () => import('@/views/leaflet/indexStatic'),
+      //   name: 'leaflet',
+      //   meta: { title: 'leaflet静态图片缩放标记' }
+      // },
+      // {
+      //   path: '/leaflet-demo',
+      //   component: () => import('@/views/leafletDemo/index'),
+      //   name: 'leaflet',
+      //   meta: { title: 'leaflet动态' }
+      // },
+      // {
+      //   path: '/leaflet-map',
+      //   component: () => import('@/views/leaflet/mapshow'),
+      //   name: 'leaflet',
+      //   meta: { title: 'leafletmap' }
+      // }
     ]
   },
   {
@@ -240,6 +246,37 @@ export const asyncRoutes = [
         component: () => import('@/views/customComponents/loading'),
         name: 'loading',
         meta: { title: '自定义loading' }
+      }
+    ]
+  },
+  {
+    path: '/echartExample',
+    component: Layout,
+    meta: { title: 'echarts', icon: 'chart' },
+    children: [
+      {
+        path: '/echart-liquid',
+        component: () => import('@/views/echarts-liquid'),
+        name: '水球图',
+        meta: { title: '水球图' }
+      },
+      {
+        path: 'bmap',
+        component: () => import('@/views/echartExample/bmap'),
+        name: '地图',
+        meta: { title: '地图bmap' }
+      },
+      {
+        path: 'chinaMap',
+        component: () => import('@/views/echartExample/chinaMap'),
+        name: '中国地图',
+        meta: { title: '中国地图' }
+      },
+      {
+        path: '/datascreen',
+        component: () => import('@/views/dataScreen'),
+        name: '大屏可视化',
+        meta: { title: '大屏可视化' }
       }
     ]
   },

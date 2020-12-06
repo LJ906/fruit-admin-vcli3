@@ -14,40 +14,40 @@ export default {
       bims: [
         {
           name: 'urn_model1',
-          // path: 'http://wlui.oss-cn-beijing.aliyuncs.com/bimdata/demo1/0.svf',
-          path: './file/dwg1.dwg',
-          modelObj: null,
+          path: 'http://wlui.oss-cn-beijing.aliyuncs.com/bimdata/demo1/0.svf',
+          // path: './file/dwg1.dwg',
+          modelObj: null
         },
-        // {
-        //   name: 'urn_model2',
-        //   path: 'http://wlui.oss-cn-beijing.aliyuncs.com/bimdata/demo2/0.svf',
-        //   modelObj: null
-        // },
-        // {
-        //   name: 'urn_model3',
-        //   path: 'http://wlui.oss-cn-beijing.aliyuncs.com/bimdata/demo3/0.svf',
-        //   modelObj: null
-        // },
-        // {
-        //   name: 'urn_model4',
-        //   path: 'http://wlui.oss-cn-beijing.aliyuncs.com/bimdata/demo4/0.svf',
-        //   modelObj: null
-        // },
-        // {
-        //   name: 'urn_model5',
-        //   path:
-        //     'http://wlui.oss-cn-beijing.aliyuncs.com/bimdata/demo5/Sphere.svf',
-        //   modelObj: null
-        // },
-        // {
-        //   name: 'urn_model6',
-        //   path:
-        //     'http://wlui.oss-cn-beijing.aliyuncs.com/bimdata/demo5/Sphere.svf',
-        //   modelObj: null
-        // }
-      ],
+        {
+          name: 'urn_model2',
+          path: 'http://wlui.oss-cn-beijing.aliyuncs.com/bimdata/demo2/0.svf',
+          modelObj: null
+        },
+        {
+          name: 'urn_model3',
+          path: 'http://wlui.oss-cn-beijing.aliyuncs.com/bimdata/demo3/0.svf',
+          modelObj: null
+        },
+        {
+          name: 'urn_model4',
+          path: 'http://wlui.oss-cn-beijing.aliyuncs.com/bimdata/demo4/0.svf',
+          modelObj: null
+        },
+        {
+          name: 'urn_model5',
+          path:
+            'http://wlui.oss-cn-beijing.aliyuncs.com/bimdata/demo5/Sphere.svf',
+          modelObj: null
+        },
+        {
+          name: 'urn_model6',
+          path:
+            'http://wlui.oss-cn-beijing.aliyuncs.com/bimdata/demo5/Sphere.svf',
+          modelObj: null
+        }
+      ]
     }
-  },
+  }
 }
 </script>
 <style lang="scss" scoped>
