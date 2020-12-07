@@ -17,13 +17,14 @@
 .screen-left {
   display: flex;
   flex-direction: column;
-  width: 860px;
+  // width: 860px;
+  width: 50%;
   height: 100%;
   margin: 0 10px;
 
   .left-top1 {
-    height: 206px;
-    margin-bottom: 20px;
-    border: 2px solid red;
+    height: 104px;
+    margin-bottom: 10px;
+    border: 1px solid red;
   }
 }

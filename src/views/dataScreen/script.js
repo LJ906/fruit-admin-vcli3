@@ -1,8 +1,9 @@
 import Loading from '../../components/Loading'
-
+import TotalUser from './components/totalUser'
 export default {
   components: {
-    Loading
+    Loading,
+    TotalUser
   },
   data() {
     return {

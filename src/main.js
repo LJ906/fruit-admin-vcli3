@@ -22,7 +22,7 @@ import Print from 'vue-print-nb'
 import _ from 'lodash'
 
 import VCharts from 'v-charts'
-
+import VueCountTo from './components/VueCountTo/vue-countTo'
 // swiper
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
@@ -35,6 +35,7 @@ Vue.use(Element)
 Vue.use(Print)
 Vue.use(VueAwesomeSwiper)
 
+Vue.component('CountTo', VueCountTo)
 Vue.prototype.$_ = _
 Vue.config.productionTip = false
 
