@@ -34,14 +34,6 @@ export const constantRoutes = [
     component: () => import('@/views/error-page/401'),
     hidden: true
   }
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
 ]
 
 /**
@@ -273,10 +265,22 @@ export const asyncRoutes = [
         meta: { title: '中国地图' }
       },
       {
-        path: '/datascreen',
-        component: () => import('@/views/dataScreen'),
-        name: '大屏可视化',
-        meta: { title: '大屏可视化' }
+        path: 'mapZhuanqu',
+        component: () => import('@/views/echartExample/mapZhuanqu'),
+        name: '地图钻取',
+        meta: { title: '地图钻取' }
+      },
+      // {
+      //   path: '/datascreen',
+      //   component: () => import('@/views/dataScreen'),
+      //   name: '大屏可视化',
+      //   meta: { title: '大屏可视化' }
+      // },
+      {
+        path: '/pieCircle',
+        component: () => import('@/views/charts/pieCircle'),
+        name: '圆环饼图',
+        meta: { title: '圆环饼图' }
       }
     ]
   },

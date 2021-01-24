@@ -3,7 +3,20 @@
 </template>
 
 <script>
-import echarts from 'echarts'
+// import echarts from 'echarts'
+// 引入基本模板
+import echarts from 'echarts/lib/echarts'
+import 'echarts/lib/chart/line'
+import 'echarts/lib/chart/pie'
+import 'echarts/lib/chart/effectScatter'
+import 'echarts/lib/chart/bar'
+import 'echarts/lib/chart/radar'
+// 引入提示框和title组件，图例
+import 'echarts/lib/component/tooltip'
+import 'echarts/lib/component/title'
+import 'echarts/lib/component/legend'
+import 'echarts/lib/component/legendScroll' // 图例翻译滚动
+
 import 'echarts/map/js/china.js'
 import resize from './mixins/resize'
 
