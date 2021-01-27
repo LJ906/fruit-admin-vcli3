@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import echarts from 'echarts'
+// import echarts from 'echarts'
 import 'echarts-liquidfill'
 import BaseChart from '@/components/Charts/BaseChart'
 

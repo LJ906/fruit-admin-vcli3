@@ -18,6 +18,8 @@ import 'echarts/lib/component/legend'
 import 'echarts/lib/component/legendScroll' // 图例翻译滚动
 
 import 'echarts/map/js/china.js'
+import 'echarts/map/js/province/jilin.js' // 各省份地图js
+import 'echarts/map/js/province/shandong.js' // 各省份地图js
 import resize from './mixins/resize'
 
 export default {

@@ -247,6 +247,12 @@ export const asyncRoutes = [
     meta: { title: 'echarts', icon: 'chart' },
     children: [
       {
+        path: '/customPie',
+        component: () => import('@/views/charts/index'),
+        name: '样例',
+        meta: { title: '样例' }
+      },
+      {
         path: '/echart-liquid',
         component: () => import('@/views/echarts-liquid'),
         name: '水球图',

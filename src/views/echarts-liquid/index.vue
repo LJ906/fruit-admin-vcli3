@@ -1,24 +1,20 @@
 <template>
-  <div>
+  <div style="display: flex;">
     <!-- 占比水球图 -->
     <base-chart :option="option" width="300px" height="300px"></base-chart>
     <base-chart :option="option2" width="300px" height="300px"></base-chart>
-    <liquid-circle :chart-series="yearOldCar"></liquid-circle>
   </div>
 </template>
 
 <script>
-import liquidCircle from './components/liquidCircle'
-
 import BaseChart from '@/components/Charts/BaseChart'
-import 'echarts-liquidfill'
+// import 'echarts-liquidfill'
 var uploadedDataURL = '/asset/get/s/data-1482222810548-H1myTvIEg.png'
 var radius = 250
 
 export default {
   components: {
-    BaseChart,
-    liquidCircle
+    BaseChart
   },
   data() {
     return {
@@ -87,7 +83,6 @@ export default {
           }
         ]
       },
-
       option2: {
         backgroundColor: '#0ca59c',
         series: [{
@@ -131,13 +126,6 @@ export default {
             top: 'middle'
           }]
         }
-      },
-      yearOldCar: {
-        title: '旧车',
-        targetVal: 1000,
-        actualValue: 300,
-        rate: 0.3,
-        percent: '30'
       }
     }
   }
