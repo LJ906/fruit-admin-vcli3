@@ -51,43 +51,43 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/editor/index'),
         name: 'Editor',
-        meta: { title: '富文本编辑器', noCache: true }
+        meta: { title: '富文本编辑器', noCache: false }
       },
       {
         path: 'g6-flow-demo1',
         component: () => import('@/views/vue-editor-flow/index'),
         name: 'g6-flow-demo1',
-        meta: { title: '流程图G6-1', noCache: true }
+        meta: { title: '流程图G6-1', noCache: false }
       },
       {
         path: 'g6-flow-demo2',
         component: () => import('@/views/vue-editor-flow/dagre1'),
         name: 'g6-flow-demo2',
-        meta: { title: '流程图G6-2', noCache: true }
+        meta: { title: '流程图G6-2', noCache: false }
       },
       {
         path: 'jsplumb-demo1',
         component: () => import('@/views/easy-flow/index'),
         name: '流程图jsPlumb-1',
-        meta: { title: '流程图jsPlumb-1', noCache: true }
+        meta: { title: '流程图jsPlumb-1', noCache: false }
       },
       {
         path: 'jsplumb-demo2',
         component: () => import('@/views/easy-flow/panel'),
         name: '流程图jsPlumb-2',
-        meta: { title: '流程图-自定义节点', noCache: true }
+        meta: { title: '流程图-自定义节点', noCache: false }
       },
       {
         path: 'jsplumb-demo3',
         component: () => import('@/views/easy-flow/demo3'),
         name: '流程图jsPlumb-3',
-        meta: { title: '树结构选节点', noCache: true }
+        meta: { title: '树结构选节点', noCache: false }
       },
       {
         path: 'jsplumb-beta',
         component: () => import('@/views/easy-flow/demo4'),
         name: '原型版-beta',
-        meta: { title: '两侧节点拖动流程图', noCache: true }
+        meta: { title: '两侧节点拖动流程图', noCache: false }
       }
     ]
   },
@@ -101,13 +101,13 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/drag/drag-dialog'),
         name: 'drag-dialog',
-        meta: { title: 'drag-dialog', noCache: true }
+        meta: { title: 'drag-dialog', noCache: false }
       },
       {
         path: 'drag-kanban',
         component: () => import('@/views/drag/drag-kanban'),
         name: 'drag-kanban',
-        meta: { title: '拖拽看板', noCache: true }
+        meta: { title: '拖拽看板', noCache: false }
       }
     ]
   },
@@ -135,7 +135,6 @@ export const asyncRoutes = [
   },
   {
     path: '/print',
-    // redirect: 'transition/index',
     component: Layout,
     meta: { title: '打印', icon: 'print' },
     children: [
@@ -144,6 +143,12 @@ export const asyncRoutes = [
         component: () => import('@/views/print'),
         name: 'print',
         meta: { title: '打印pdf' }
+      },
+      {
+        path: 'signiture',
+        component: () => import('@/views/print/signiture'),
+        name: 'signiture',
+        meta: { title: '手写签名' }
       }
     ]
   },
@@ -157,6 +162,12 @@ export const asyncRoutes = [
         component: () => import('@/views/table/dynamicColumn'),
         name: 'dynamicColumn',
         meta: { title: '动态列表格' }
+      },
+      {
+        path: '/easyTable',
+        component: () => import('@/views/table/easyTable'),
+        name: 'easyTable',
+        meta: { title: 'easyTable' }
       }
     ]
   },
