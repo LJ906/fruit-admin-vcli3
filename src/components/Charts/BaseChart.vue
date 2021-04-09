@@ -22,6 +22,9 @@ import 'echarts/map/js/province/jilin.js' // 各省份地图js
 import 'echarts/map/js/province/shandong.js' // 各省份地图js
 import resize from './mixins/resize'
 
+import 'echarts/extension/bmap/BMapCoordSys.js'
+// import BMap from 'echarts/extension/bmap/bmap.js'
+// import { MP } from './baidu-map.js'
 export default {
   mixins: [resize],
   props: {
