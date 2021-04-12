@@ -5,10 +5,9 @@
 </template>
 
 <script>
-// 使用v-charts 中的v-map
-// import BMapCoordSys from 'echarts/extension/bmap/BMapCoordSys.js'
+// 使用echats-bmap
 import BaseMap from '@/components/Charts/BaseChart'
-// import { mockData } from './mock'
+// import BMapCoordSys from 'echarts/extension/bmap/BMapCoordSys.js'
 
 // import BMap from 'echarts/extension/bmap/bmap.js'
 import { MP } from '@/components/Charts/baidu-map.js'

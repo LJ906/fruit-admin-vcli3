@@ -270,6 +270,12 @@ export const asyncRoutes = [
         meta: { title: '水球图' }
       },
       {
+        path: 'vue-baidumap',
+        component: () => import('@/views/echartExample/vue-baidumap'),
+        name: 'vue-baidu-map',
+        meta: { title: 'vue-baidu-map' }
+      },
+      {
         path: 'bmap',
         component: () => import('@/views/echartExample/bmap'),
         name: '地图',
