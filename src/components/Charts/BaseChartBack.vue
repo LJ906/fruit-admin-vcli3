@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" :ref="id" :style="{height:height,width:width}" />
+  <div :id="id" :ref="id" :style="{ height: height, width: width }" />
 </template>
 
 <script>
@@ -12,7 +12,7 @@ export default {
   props: {
     option: {
       type: Object,
-      default: () => {}
+      default: () => { }
     },
     id: {
       type: String,
@@ -27,23 +27,14 @@ export default {
       default: '200px'
     }
   },
-  data () {
-    const xData = (function() {
-      const data = []
-      for (let i = 1; i < 13; i++) {
-        data.push(i + 'month')
-      }
-      return data
-    })()
-
+  data() {
     return {
       chart: null
     }
   },
   watch: {
-    option (val) {
-      console.log('optinsbianhua  ', option)
-        this.chart.setOption(val)
+    option(val) {
+      this.chart.setOption(val)
     }
     // option: {
     //   handler(val) {
@@ -52,14 +43,14 @@ export default {
     //   deep: true
     // }
   },
-  created () {
+  created() {
     this.resize = debounce(this.resize, 300)
   },
-  mounted () {
+  mounted() {
     this.renderChart()
     addListener(this.$refs[this.id], this.resize)
   },
-  beforeDestroy () {
+  beforeDestroy() {
     removeListener(this.$refs[this.id], this.resize)
     if (!this.chart) {
       return
@@ -68,10 +59,10 @@ export default {
     this.chart = null
   },
   methods: {
-    resize () {
+    resize() {
       this.chart.resize()
     },
-    renderChart () {
+    renderChart() {
       // 基于准备好的dom，初始化echarts实例
       this.chart = echarts.init(this.$refs[this.id])
       this.chart.setOption(this.option)
@@ -88,6 +79,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>
