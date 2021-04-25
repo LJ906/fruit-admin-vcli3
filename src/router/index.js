@@ -278,8 +278,8 @@ export const asyncRoutes = [
       {
         path: 'bmap',
         component: () => import('@/views/echartExample/bmap'),
-        name: '地图',
-        meta: { title: '地图bmap' }
+        name: 'echarts-bmap地图',
+        meta: { title: 'echarts-bmap' }
       },
       {
         path: 'chinaMap',
