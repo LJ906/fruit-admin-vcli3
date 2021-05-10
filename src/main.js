@@ -34,10 +34,18 @@ import 'swiper/dist/css/swiper.css'
 import wlBimViewer from 'wl-bim-viewer'
 import 'wl-bim-viewer/lib/wl-bim-viewer.css'
 
+// html 转PDF
+import htmlToPdf from '@/components/htmlToPdf.js'
+
 // 手写签名
 import SignCanvas from 'sign-canvas'
-Vue.use(SignCanvas)
 
+// 引入高德地图vue-amap
+// import VueAMap from 'vue-amap'
+
+Vue.component('CountTo', VueCountTo)
+Vue.use(SignCanvas)
+Vue.use(htmlToPdf)
 Vue.use(wlBimViewer)
 Vue.use(VCharts)
 Vue.use(Element)
@@ -45,7 +53,16 @@ Vue.use(Print)
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueEasytable)
 
-Vue.component('CountTo', VueCountTo)
+// 高德地图
+// Vue.use(VueAMap)
+// // 初始化vue-amap
+// VueAMap.initAMapApiLoader({
+//   key: 'Y7f82cd2bbf4e3762d4e9e8610beae464',
+//   plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor'],
+//   v: '1.4.4',
+//   uiVersion: '1.0.11'
+// })
+
 Vue.prototype.$_ = _
 Vue.config.productionTip = false
 

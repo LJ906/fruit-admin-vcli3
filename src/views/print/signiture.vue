@@ -103,7 +103,7 @@ export default {
         lineJoin: 'round', // 线条交汇时边角的类型  [bevel]创建斜角 [round]创建圆角 [miter]创建尖角。
         canvasWidth: 350, // canvas宽高 [Number] 可选
         canvasHeight: 370, // 高度  [Number] 可选
-        isShowBorder: true, // 是否显示边框 [可选]
+        isShowBorder: false, // 是否显示边框 [可选]
         bgColor: '#fcc', // 背景色 [String] 可选 注:这背景色仅仅只是canvas背景,保存的图片仍然是透明的
         borderWidth: 1, // 网格线宽度  [Number] 可选
         borderColor: '#ff787f', // 网格颜色  [String] 可选
@@ -157,6 +157,7 @@ export default {
 .view-image {
   display: block;
   margin: 20px auto;
+  border: 1px solid #ccc;
 }
 .config {
   width: 350px;

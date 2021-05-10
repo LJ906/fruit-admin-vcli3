@@ -149,6 +149,12 @@ export const asyncRoutes = [
         component: () => import('@/views/print/signiture'),
         name: 'signiture',
         meta: { title: '手写签名' }
+      },
+      {
+        path: 'print-pdf',
+        component: () => import('@/views/print/pdf'),
+        name: 'print-pdf',
+        meta: { title: '下载pdf' }
       }
     ]
   },
@@ -240,6 +246,25 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/map',
+    component: Layout,
+    meta: { title: '地图', icon: 'nested' },
+    children: [
+      {
+        path: 'amap',
+        component: () => import('@/views/map/amap'),
+        name: 'amap',
+        meta: { title: '高德地图原生' }
+      },
+      {
+        path: 'vue-baidumap',
+        component: () => import('@/views/echartExample/vue-baidumap'),
+        name: 'vue-baidu-map',
+        meta: { title: 'vue-baidu-map' }
+      }
+    ]
+  },
+  {
     path: '/custom-components',
     component: Layout,
     meta: { title: '自定义组件', icon: 'component' },
@@ -270,28 +295,10 @@ export const asyncRoutes = [
         meta: { title: '水球图' }
       },
       {
-        path: 'vue-baidumap',
-        component: () => import('@/views/echartExample/vue-baidumap'),
-        name: 'vue-baidu-map',
-        meta: { title: 'vue-baidu-map' }
-      },
-      {
-        path: 'bmap',
-        component: () => import('@/views/echartExample/bmap'),
-        name: 'echarts-bmap地图',
-        meta: { title: 'echarts-bmap' }
-      },
-      {
         path: 'chinaMap',
         component: () => import('@/views/echartExample/chinaMap'),
         name: '中国地图',
         meta: { title: '中国地图' }
-      },
-      {
-        path: 'mapZhuanqu',
-        component: () => import('@/views/echartExample/mapZhuanqu'),
-        name: '地图钻取',
-        meta: { title: '地图钻取' }
       },
       // {
       //   path: '/datascreen',
