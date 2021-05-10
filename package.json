@@ -28,7 +28,7 @@
     "leaflet": "^0.7.7",
     "leaflet-draw": "^0.4.9",
     "leaflet.label": "^0.2.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "path-to-regexp": "^5.0.0",
