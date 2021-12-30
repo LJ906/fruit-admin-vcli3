@@ -1,4 +1,4 @@
-<template>
+`<template>
   <div class="p-30">
     <el-form ref="form" :model="form" label-width="80px" :inline="true">
       <el-form-item label="姓名">
