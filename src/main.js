@@ -21,10 +21,13 @@ import VueEasytable from 'vue-easytable'
 // 窗口打印pdf
 import Print from 'vue-print-nb'
 
-// import * as filters from './filters'
+import * as filters from './filters'
 import _ from 'lodash'
 
 import VCharts from 'v-charts'
+
+// vue-echarts
+// import VueEcharts from 'vue-echarts'
 import VueCountTo from './components/VueCountTo/vue-countTo'
 // swiper
 import VueAwesomeSwiper from 'vue-awesome-swiper'
@@ -36,16 +39,17 @@ import 'wl-bim-viewer/lib/wl-bim-viewer.css'
 
 // html 转PDF
 import htmlToPdf from '@/components/htmlToPdf.js'
+import htmlToImg from '@/components/html2Img'
 
 // 手写签名
 import SignCanvas from 'sign-canvas'
 
-// 引入高德地图vue-amap
-// import VueAMap from 'vue-amap'
+// Vue.component('v-chart', VueEcharts)
 
 Vue.component('CountTo', VueCountTo)
 Vue.use(SignCanvas)
 Vue.use(htmlToPdf)
+Vue.use(htmlToImg)
 Vue.use(wlBimViewer)
 Vue.use(VCharts)
 Vue.use(Element)
@@ -53,15 +57,10 @@ Vue.use(Print)
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueEasytable)
 
-// 高德地图
-// Vue.use(VueAMap)
-// // 初始化vue-amap
-// VueAMap.initAMapApiLoader({
-//   key: 'Y7f82cd2bbf4e3762d4e9e8610beae464',
-//   plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor'],
-//   v: '1.4.4',
-//   uiVersion: '1.0.11'
-// })
+// register global utility filters
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
 
 Vue.prototype.$_ = _
 Vue.config.productionTip = false

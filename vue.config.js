@@ -56,10 +56,10 @@ module.exports = {
         '@': resolve('src')
       }
     },
-    externals: {
-      AMap: 'AMap',
-      AMapUI: 'window.AMapUI'
-    },
+    // externals: {
+    //   AMap: 'AMap',
+    //   AMapUI: 'window.AMapUI'
+    // },
     plugins: [
       new webpack.ProvidePlugin({
         $: 'jquery',

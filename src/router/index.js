@@ -154,7 +154,13 @@ export const asyncRoutes = [
         path: 'print-pdf',
         component: () => import('@/views/print/pdf'),
         name: 'print-pdf',
-        meta: { title: '下载pdf' }
+        meta: { title: '预览文件&下载base64' }
+      },
+      {
+        path: 'preview-pdf',
+        component: () => import('@/views/print/detail'),
+        name: 'preview-pdf',
+        meta: { title: '预览PDF&下载' }
       }
     ]
   },
@@ -254,7 +260,7 @@ export const asyncRoutes = [
         path: 'amap',
         component: () => import('@/views/map/amap'),
         name: 'amap',
-        meta: { title: '高德地图原生' }
+        meta: { title: '高德地图Icon' }
       },
       {
         path: 'vue-baidumap',
