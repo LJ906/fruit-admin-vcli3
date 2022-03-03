@@ -15,5 +15,8 @@ export default {
         binding.value(e)
       }
     })
+  },
+  unbind(el) {
+    el.removeEventListener('scroll')
   }
 }

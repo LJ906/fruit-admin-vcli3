@@ -15,7 +15,8 @@ export default {
     return {
       list: [],
       pageNo: 1,
-      pageSize: 10
+      pageSize: 10,
+      finished: false
     }
   },
   mounted() {
@@ -23,11 +24,16 @@ export default {
   },
   methods: {
     initTable(e) {
+      if (this.finished) return false
       console.log('加载更多this.pageNo', this.pageNo)
       for (let i = (this.pageNo - 1) * this.pageSize + 1; i < (this.pageNo * this.pageSize + 1); i++) {
         this.list.push(i)
       }
       this.pageNo++
+      // 加载完第四页后停止
+      if (this.pageNo > 4) {
+        this.finished = true
+      }
     }
   }
 }
