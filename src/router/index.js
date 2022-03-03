@@ -320,6 +320,34 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/svg',
+    name: 'svg',
+    component: Layout,
+    meta: { title: 'svg' },
+    children: [
+      {
+        path: '/svgAnimation',
+        component: () => import('@/views/svg/svgAnimation'),
+        name: 'svgAnimation',
+        meta: { title: 'svgAnimation' }
+      }
+    ]
+  },
+  {
+    path: '/infiniteScroll',
+    name: 'infiniteScroll',
+    component: Layout,
+    meta: { title: 'infiniteScroll' },
+    children: [
+      {
+        path: '',
+        component: () => import('@/components/infiniteScroll/index.vue'),
+        name: 'infiniteScroll',
+        meta: { title: 'infiniteScroll', noCache: true }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

@@ -45,7 +45,7 @@ import htmlToImg from '@/components/html2Img'
 import SignCanvas from 'sign-canvas'
 
 // Vue.component('v-chart', VueEcharts)
-
+import Icon from '@/components/customSvg/index.js'
 Vue.component('CountTo', VueCountTo)
 Vue.use(SignCanvas)
 Vue.use(htmlToPdf)
@@ -56,6 +56,8 @@ Vue.use(Element)
 Vue.use(Print)
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueEasytable)
+// 自动以svg图标
+Vue.use(Icon)
 
 // register global utility filters
 Object.keys(filters).forEach(key => {
