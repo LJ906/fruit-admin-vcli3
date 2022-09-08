@@ -28,7 +28,7 @@
     "js-cookie": "^2.2.1",
     "jspdf": "^2.3.1",
     "jsplumb": "^2.13.2",
-    "jszip": "^3.4.0",
+    "jszip": "^3.7.0",
     "leaflet": "^0.7.7",
     "leaflet-draw": "^0.4.9",
     "leaflet.label": "^0.2.4",
